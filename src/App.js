@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Todos from './components/Todos';
+import Todo from './Todo';
 import './App.css';
 
 // Other type of acceptable extending wuld be:
@@ -7,26 +8,14 @@ import './App.css';
 class App extends Component {
   state = {
     todos : [
-      {
-        id : 0,
-        title : 'Take out the trash',
-        completed: false
-      },
-      {
-        id : 1,
-        title : 'Dinner with wife',
-        completed: false
-      },
-      {
-        id : 2,
-        title : 'Meeting with boss.',
-        completed: false
-      }
+      new Todo(0, 'Take out the trash'),
+      new Todo(1, 'Dinner with wife'),
+      new Todo(2, 'Meeting with boss.')
     ] 
   };
 
   // render() is a life cycle method. This returns a JSX.
-  // Include JS into JSX with curly braces {}
+  // Include JS into JSX with curly braces {} --> `{this.state.todos}`
   // HTML class --> `className`
   render() {
     return (

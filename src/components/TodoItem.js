@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Todo from '../Todo';
 
 export class TodoItem extends Component {
   render() {
     return (
-      <div>
+      <div style={{ backgroundColor: "#f4f4f4"}}>
           <p>{this.props.todo.title}</p>
       </div>
     )
@@ -12,7 +13,7 @@ export class TodoItem extends Component {
 }
 
 TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired
+  todo: PropTypes.instanceOf(Todo).isRequired
 }
 
 export default TodoItem
