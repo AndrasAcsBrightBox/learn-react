@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 
 class Todos extends React.Component {
     render() {
-        console.log(this.props.todos);
+        // Higher order function --> Array.prototype.map(fn)
 
-        // Higher ourder function --> Array.prototype.map(fn)
+        // A function is considered as a higher order function, if it accepts a function as an argument
+        // or retruns with a function.
         return this.props.todos.map(
             (todo) => (
                 <TodoItem 
