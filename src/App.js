@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
-import Todos from './components/Todos';
-import Todo from './Todo';
-import './App.css';
+import React, { Component } from "react";
+import Todos from "./components/Todos";
+import Todo from "./Todo";
+import "./App.css";
+import Header from "./components/layout/header";
+import AddTodo from "./components/addTodo";
 
 /*
   React:
@@ -20,11 +22,11 @@ import './App.css';
 // `class App extends React.Component`
 class App extends Component {
   state = {
-    todos : [
-      new Todo(0, 'Take out the trash'),
-      new Todo(1, 'Dinner with wife'),
-      new Todo(2, 'Meeting with boss.')
-    ] 
+    todos: [
+      new Todo(0, "Take out the trash", true),
+      new Todo(1, "Dinner with wife"),
+      new Todo(2, "Meeting with boss.")
+    ]
   };
 
   /*
@@ -32,10 +34,42 @@ class App extends Component {
     Once an element is created it is never mutated. Creatign elements is cheap.
   */
   sampleElement = React.createElement(
-    'div', 
-    { id : 'login-btn'},
-    'Sample Element'
-  )
+    "div",
+    { id: "login-btn" },
+    "Sample Element"
+  );
+
+  // One way data flow.
+  markComplete = id => {
+    this.setState({
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      })
+    });
+  };
+
+  delete = id => {
+    this.setState({
+      todos: this.state.todos.filter(todo => {
+        return todo.id != id;
+      })
+    });
+  };
+
+  addTodo = title => {
+    if (!title) return;
+    let newId =
+      this.state.todos.length > 0
+        ? this.state.todos[this.state.todos.length - 1].id + 1
+        : 0;
+
+    this.setState({
+      todos: [...this.state.todos, new Todo(newId, title)]
+    });
+  };
 
   // render() is a life cycle method. This returns a JSX (JavaScript XML).
   // JSX is providing syntax sugar for the React.createElement() function (HTML like templating)
@@ -44,9 +78,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.sampleElement}
-        <h1>{'Welcome to the React world!'}</h1>
-        <Todos todos={this.state.todos} />
+        {/* {this.sampleElement} */}
+        <Header />
+        <AddTodo addTodo={this.addTodo} />
+        <Todos
+          todos={this.state.todos}
+          markComplete={this.markComplete}
+          delete={this.delete}
+        />
       </div>
     );
   }
